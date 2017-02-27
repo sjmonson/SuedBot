@@ -1,0 +1,17 @@
+imgurpython
+praw
+steamodd
+wolframalpha
+cleverwrap
+discord.py
+xmltodict
+pyowm
+google
+esix
+strawpoll.py
+microsofttranslator
+wikipedia
+humanize
+Pillow
+urbandictionary
+yapi
