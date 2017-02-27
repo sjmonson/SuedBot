@@ -21,5 +21,4 @@ class CleverBotCommands():
         await self.bot.say(response) if edit == None else await self.bot.edit_message(edit, response)
 		
 def setup(bot):
-    bot.loop.create_task(chat_reset())
     bot.add_cog(CleverBotCommands(bot))
