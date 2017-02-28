@@ -50,97 +50,8 @@ def imgurAlbumToItems(albumLink):
     else:
         ret = albumLink.link
     return ret
-
-
-# Returns streamID if channel live, otherwise -1
-def IsTwitchLive(streamID):
-    url = str('https://api.twitch.tv/kraken/streams/'+streamID)
-    respose = requests.get(url,headers={'Client-ID':tokens['TwitchTV'],'Accept':'application/vnd.twitchtv.v5+json'})
-    html = respose.text
-    data = json.loads(html)
-    if str(data['stream']) == str(None):
-        return -1
-    try:
-        return str(data['stream']['game'])
-    except:
-        return 'unknown'
-    return -1
-
-
-async def twitchChecker():
-    await bot.wait_until_ready()
-    print("Twitch check starting")
-    fmt = 'The channel `{0}` is live on Twitch playing `{1}`! Check it out! <http://twitch.tv/{0}>'
-    while True:
-        for i in bot.servers:
-            serverStuff = giveAllowances(i.id)
-            if serverStuff['Streams']['Channel'] != '':
-                toPostTo = discord.Object(serverStuff['Streams']['Channel'])
-            else:
-                toPostTo = i
-            streams = serverStuff['Streams']['TwitchTV']
-            games = serverStuff['Streams']['Game']
-            for o in streams:
-                q = IsTwitchLive(streams[o])
-                try:
-                    games[o]
-                except KeyError:
-                    games[o] = -1
-                if games[o] != str(q) and str(q) != '-1':
-                    await bot.send_message(toPostTo, fmt.format(o, str(q)))
-                games[o] = str(q)
-                    # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
-            serverStuff['Streams']['Game'] = games
-            writeAllow(i.id, serverStuff)
-        await asyncio.sleep(60)
-        
-# Returns list of new video if any
-def NewYoutubeVid(channelItem, doLive):
-    newVids = {'vids' : {}, 'max_date' : ""}
-    dates = []
-    lastFive = youtubeData.get_playlist_items_by_playlist_id(channelItem['UploadsPlaylist'], max_results=5)
-    for video in lastFive.items:
-        if video.snippet.publishedAt > channelItem['lastPostDate']:
-            dates.append(str(video.snippet.publishedAt))
-            #if doLive == "False":
-            #    if video.snippet.liveBroadcastContent.lower() == "none":
-            #        newVids['vids'][str(video.id.videoId)] = video.snippet.liveBroadcastContent
-            #else:
-            newVids['vids'][str(video.snippet.resourceId.videoId)] = 'none' #video.snippet.liveBroadcastContent
-    if len(dates) != 0:
-        newVids['max_date'] = max(dates)
-    return newVids
-
-
-async def youtubeChecker():
-    await bot.wait_until_ready()
-    print("Youtube check starting")
-    fmt = 'The channel `{}` has posted a {} video on youtube! Check it out! <https://youtu.be/{}>'
-    while True:
-        for i in bot.servers:
-            serverStuff = giveAllowances(i.id)
-            try:
-                serverStuff['Youtube']
-            except KeyError:
-                serverStuff['Youtube'] = defSerCon['Youtube']
-            if serverStuff['Youtube']['Channel'] != '':
-                toPostTo = discord.Object(serverStuff['Youtube']['Channel'])
-            else:
-                toPostTo = i
-            channels = serverStuff['Youtube']['Channels']
-            for c in channels:
-                newVids = NewYoutubeVid(channels[c], serverStuff['Youtube']['DoLive'])
-                for video in newVids['vids']:
-                    if newVids['vids'][video] == 'none':
-                        await bot.send_message(toPostTo, fmt.format(channels[c]['Name'], "new", str(video)))
-                    else:
-                        await bot.send_message(toPostTo, fmt.format(channels[c]['Name'], "live", str(video)))
-                        # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
-                    serverStuff['Youtube']['Channels'][c]['lastPostDate'] = newVids['max_date']
-            writeAllow(i.id, serverStuff)
-        await asyncio.sleep(300)
-
-
+    
+    
 @bot.event
 async def on_member_join(member):
     server = member.server
@@ -327,6 +238,4 @@ async def on_message(message):
     if continueWithComms:
         await bot.process_commands(message)
 
-bot.loop.create_task(twitchChecker())
-bot.loop.create_task(youtubeChecker())
 bot.run(discordToken)
