@@ -57,8 +57,7 @@ defSerCon = \
         },
         "Streams" : {
             "Channel" : "",
-            "TwitchTV" : {},
-            "Game" : {}
+            "TwitchTV" : {}
         },
         "Youtube" : {
             "Channel" : "",
