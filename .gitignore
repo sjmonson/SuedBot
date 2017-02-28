@@ -4,7 +4,7 @@ botTxtFiles/bot.log
 botTxtFiles/discordTokens.json
 botTxtFiles/game.txt
 botTxtFiles/blacklist.txt
-addon_dev.py
+addon_debug.py
 .google-cookie
 *.jpg
 *.png

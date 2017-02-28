@@ -11,7 +11,7 @@ non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 
 
 def txtFileToList(nameOfFile):
-    nameOfFile = workingDirectory + nameOfFile + '.txt'
+    nameOfFile = addonFiles + nameOfFile + '.txt'
     file = open(nameOfFile, 'r', encoding="utf-8")
     fileContent = file.read()
     file.close()
@@ -100,7 +100,7 @@ class Fun():
 
     @commands.command(pass_context=True, aliases=['complement', 'complements', 'compliments'], description='Prints out some Skyrim guard text.')
     async def compliment(self, ctx):
-        with open(workingDirectory + "complements.txt") as a:
+        with open(addonFiles + "complements.txt") as a:
             es = a.read()
         es = es.split('\n')
         msg = randFromList(es)

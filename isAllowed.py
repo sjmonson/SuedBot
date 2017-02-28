@@ -9,6 +9,8 @@ workingDirectory = os.path.dirname(os.path.realpath(__file__)) + \
     "/botTxtFiles/"
 serverConfigs = os.path.dirname(os.path.realpath(__file__)) + \
     "/botTxtFiles/serverConfigs/"
+addonFiles = os.path.dirname(os.path.realpath(__file__)) + \
+    "/botTxtFiles/addonItems/"
 try:
     with open('%sdiscordTokens.json' % serverConfigs) as data_file:
         tokens = json.load(data_file)
