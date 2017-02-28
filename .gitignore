@@ -1,12 +1,10 @@
 __pycache__/
-botTxtFiles/OLD_serverConfigs/
-botTxtFiles/serverConfigs/
+botTxtFiles/serverConfigs/*
 botTxtFiles/bot.log
-botTxtFiles/customCommands.json
 botTxtFiles/discordTokens.json
 botTxtFiles/game.txt
 botTxtFiles/blacklist.txt
-tempAddon.py
+addon_dev.py
 .google-cookie
 *.jpg
 *.png
