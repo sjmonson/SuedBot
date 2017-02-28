@@ -3,7 +3,7 @@ praw
 steamodd
 wolframalpha
 cleverwrap
-discord.py
+discord.py[voice]
 xmltodict
 pyowm
 google

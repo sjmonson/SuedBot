@@ -33,7 +33,7 @@ class Voice():
             return
         
         # Load user blacklist   
-        with open(workingDirectory + "blacklist.txt") as a:
+        with open(addonFiles + "blacklist.txt") as a:
             q = a.read()
             blacklistedUsers = q.split('\n')
 
@@ -115,7 +115,7 @@ class Voice():
 
     async def joinNoCommand(self, ctx, outputToClient = False):
 
-        with open(workingDirectory+"blacklist.txt") as a:
+        with open(addonFiles+"blacklist.txt") as a:
             q = a.read()
             blacklistedUsers = q.split('\n')
             
@@ -143,7 +143,7 @@ class Voice():
     @commands.command(pass_context=True)
     async def leave(self, ctx):
 
-        with open(workingDirectory+"/blacklist.txt") as a:
+        with open(addonFiles+"blacklist.txt") as a:
             q = a.read()
             blacklistedUsers = q.split('\n')
             
@@ -167,7 +167,7 @@ class Voice():
 
     async def stopNoCommand(self, ctx, outputToClient = False):
 
-        with open(workingDirectory+"/blacklist.txt") as a:
+        with open(addonFiles+"blacklist.txt") as a:
             q = a.read()
             blacklistedUsers = q.split('\n')
             
@@ -276,7 +276,7 @@ class Voice():
         
     @commands.command(pass_context=True,hidden=True)
     async def number1(self, ctx):
-        with open(workingDirectory+"/number_one.txt") as a:
+        with open(addonFiles+"number_one.txt") as a:
             q = a.read()
             number_ones = q.split('\n')
         toPlay = random.choice(number_ones)
@@ -286,7 +286,7 @@ class Voice():
     @commands.command(pass_context=True)
     async def pause(self, ctx):
 
-        with open(workingDirectory+"/blacklist.txt") as a:
+        with open(addonFiles+"blacklist.txt") as a:
             q = a.read()
             blacklistedUsers = q.split('\n')
             
@@ -307,7 +307,7 @@ class Voice():
     @commands.command(pass_context=True)
     async def resume(self, ctx):
 
-        with open(workingDirectory+"/blacklist.txt") as a:
+        with open(addonFiles+"blacklist.txt") as a:
             q = a.read()
             blacklistedUsers = q.split('\n')
             
@@ -328,7 +328,7 @@ class Voice():
     @commands.command(pass_context=True,aliases=['vol','v'])
     async def volume(self, ctx, toVol : str = '20'):
 
-        with open(workingDirectory+"/blacklist.txt") as a:
+        with open(addonFiles+"blacklist.txt") as a:
             q = a.read()
             blacklistedUsers = q.split('\n')
             
@@ -341,7 +341,7 @@ class Voice():
             return
         toVol = float(toVol)
         maxVol = 100
-        if allowUse(ctx, ['is_caleb']) == False:
+        if allowUse(ctx, ['is_master']) == False:
             if toVol > maxVol:
                 toVol = maxVol
             if toVol < 0: 
