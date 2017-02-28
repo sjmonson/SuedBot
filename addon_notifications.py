@@ -30,18 +30,13 @@ async def twitchChecker(bot):
             else:
                 toPostTo = i
             streams = serverStuff['Streams']['TwitchTV']
-            games = serverStuff['Streams']['Game']
             for o in streams:
-                q = IsTwitchLive(streams[o])
-                try:
-                    games[o]
-                except KeyError:
-                    games[o] = -1
-                if games[o] != str(q) and str(q) != '-1':
+                q = IsTwitchLive(streams[o][0])
+                if streams[o][1] != str(q) and str(q) != '-1':
                     await bot.send_message(toPostTo, fmt.format(o, str(q)))
-                games[o] = str(q)
+                streams[o][1] = str(q)
                     # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
-            serverStuff['Streams']['Game'] = games
+            serverStuff['Streams']['TwitchTV'] = streams
             writeAllow(i.id, serverStuff)
         await asyncio.sleep(60)
         
@@ -131,7 +126,7 @@ class NotificationsCommands():
             await self.bot.say("This user does not exist.")
             return
         
-        strm[channelName.lower()] = channelID
+        strm[channelName.lower()] = [channelID, '-1']
         i['Streams']['TwitchTV'] = strm
         writeAllow(ctx, i)
         await self.bot.say("This user has now been added to the streamer list for this server.")
