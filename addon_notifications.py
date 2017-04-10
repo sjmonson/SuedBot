@@ -21,7 +21,7 @@ def IsTwitchLive(streamID):
 async def twitchChecker(bot):
     await bot.wait_until_ready()
     print("Twitch check starting")
-    fmt = 'The channel `{0}` is live on Twitch playing `{1}`! Check it out! <http://twitch.tv/{0}>'
+    fmt = '@everyone the channel `{0}` is live on Twitch playing `{1}`! Check it out! <http://twitch.tv/{0}>'
     while True:
         for i in bot.servers:
             serverStuff = giveAllowances(i.id)
@@ -48,11 +48,7 @@ def NewYoutubeVid(channelItem, doLive):
     for video in lastFive.items:
         if video.snippet.publishedAt > channelItem['lastPostDate']:
             dates.append(str(video.snippet.publishedAt))
-            #if doLive == "False":
-            #    if video.snippet.liveBroadcastContent.lower() == "none":
-            #        newVids['vids'][str(video.id.videoId)] = video.snippet.liveBroadcastContent
-            #else:
-            newVids['vids'][str(video.snippet.resourceId.videoId)] = 'none' #video.snippet.liveBroadcastContent
+            newVids['vids'][str(video.snippet.resourceId.videoId)] = str(video.snippet.title)
     if len(dates) != 0:
         newVids['max_date'] = max(dates)
     return newVids
@@ -61,7 +57,7 @@ def NewYoutubeVid(channelItem, doLive):
 async def youtubeChecker(bot):
     await bot.wait_until_ready()
     print("Youtube check starting")
-    fmt = 'The channel `{}` has posted a {} video on youtube! Check it out! <https://youtu.be/{}>'
+    fmt = '@everyone the channel `{}` has posted a new video on youtube, `{}` Check it out! <https://youtu.be/{}>'
     while True:
         for i in bot.servers:
             serverStuff = giveAllowances(i.id)
@@ -77,10 +73,7 @@ async def youtubeChecker(bot):
             for c in channels:
                 newVids = NewYoutubeVid(channels[c], serverStuff['Youtube']['DoLive'])
                 for video in newVids['vids']:
-                    if newVids['vids'][video] == 'none':
-                        await bot.send_message(toPostTo, fmt.format(channels[c]['Name'], "new", str(video)))
-                    else:
-                        await bot.send_message(toPostTo, fmt.format(channels[c]['Name'], "live", str(video)))
+                    await bot.send_message(toPostTo, fmt.format(channels[c]['Name'], newVids['vids'][video], str(video)))
                         # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
                     serverStuff['Youtube']['Channels'][c]['lastPostDate'] = newVids['max_date']
             writeAllow(i.id, serverStuff)
@@ -229,7 +222,7 @@ class NotificationsCommands():
             }
         i['Youtube']['Channels'] = strm 
         writeAllow(ctx, i)
-        await self.bot.say("The channel `{}` has now been added from the channel list for this server.".format(str(channel.snippet.title)))
+        await self.bot.say("The channel `{}` has now been added to the channel list for this server.".format(str(channel.snippet.title)))
         
     
     @youtube.command(pass_context=True,name='del',aliases=['delete','rem','remove'])
