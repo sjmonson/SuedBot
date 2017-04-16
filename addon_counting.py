@@ -15,7 +15,10 @@ class Counting():
             for member in ctx.message.server.members:
                 if member.bot == False:
                     count += 1
-            await self.bot.say("There are **{}** users on this server.".format(count))
+            if server.id == "220307654885638145":
+                await self.bot.say("There are **{}** users on this server and again this doesn't count bots you fucking idiot.".format(count))
+            else:
+                await self.bot.say("There are **{}** users on this server. (Not counting bots.)".format(count))
             return
         count = 0
         usersOnServer = 0
