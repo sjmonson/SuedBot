@@ -29,15 +29,18 @@ async def twitchChecker(bot):
                 toPostTo = discord.Object(serverStuff['Streams']['Channel'])
             else:
                 toPostTo = i
-            streams = serverStuff['Streams']['TwitchTV']
-            for o in streams:
-                q = IsTwitchLive(streams[o][0])
-                if streams[o][1] != str(q) and str(q) != '-1':
-                    await bot.send_message(toPostTo, fmt.format(o, str(q)))
-                streams[o][1] = str(q)
-                    # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
-            serverStuff['Streams']['TwitchTV'] = streams
-            writeAllow(i.id, serverStuff)
+            try:
+                streams = serverStuff['Streams']['TwitchTV']
+                for o in streams:
+                    q = IsTwitchLive(streams[o][0])
+                    if streams[o][1] != str(q) and str(q) != '-1':
+                        await bot.send_message(toPostTo, fmt.format(o, str(q)))
+                    streams[o][1] = str(q)
+                        # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
+                serverStuff['Streams']['TwitchTV'] = streams
+                writeAllow(i.id, serverStuff)
+            except Exception as e: # Find correct exception type
+                print("IsTwitchLive Failed: {}".format(e))
         await asyncio.sleep(60)
         
 # Returns list of new video if any
@@ -70,13 +73,16 @@ async def youtubeChecker(bot):
             else:
                 toPostTo = i
             channels = serverStuff['Youtube']['Channels']
-            for c in channels:
-                newVids = NewYoutubeVid(channels[c], serverStuff['Youtube']['DoLive'])
-                for video in newVids['vids']:
-                    await bot.send_message(toPostTo, fmt.format(channels[c]['Name'], newVids['vids'][video], str(video)))
-                        # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
-                    serverStuff['Youtube']['Channels'][c]['lastPostDate'] = newVids['max_date']
-            writeAllow(i.id, serverStuff)
+            try:
+                for c in channels:
+                    newVids = NewYoutubeVid(channels[c], serverStuff['Youtube']['DoLive'])
+                    for video in newVids['vids']:
+                        await bot.send_message(toPostTo, fmt.format(channels[c]['Name'], newVids['vids'][video], str(video)))
+                            # await bot.send_message(toPostTo, 'The channel `{0}` does not exist or has more then one result; please delete from config.'.format(o))
+                        serverStuff['Youtube']['Channels'][c]['lastPostDate'] = newVids['max_date']
+                writeAllow(i.id, serverStuff)
+            except Exception as e: # Find correct exception type
+                print("NewYoutubeVid Failed: {}".format(e))
         await asyncio.sleep(300)
         
 class NotificationsCommands():
