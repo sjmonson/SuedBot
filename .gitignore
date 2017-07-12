@@ -1,4 +1,5 @@
 __pycache__/
+.idea/
 botTxtFiles/serverConfigs/*
 botTxtFiles/bot.log
 botTxtFiles/discordTokens.json

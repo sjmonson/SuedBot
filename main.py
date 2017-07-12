@@ -27,7 +27,7 @@ youtubeData = yapi.YoutubeAPI(tokens['YoutubeData'])
 # Set the paths
 mainPath = os.path.dirname(os.path.realpath(__file__))
 addonsPath = mainPath + \
-    "/addons/"
+    "addons/"
 
 # Make the bot more unicode-friendly
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)

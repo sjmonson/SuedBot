@@ -1,9 +1,9 @@
 import os
+import sys
 import json
 import discord
 import datetime
 from discord.ext import commands
-import sys
 import strawpoll
 from urllib.request import urlretrieve
 from google import search

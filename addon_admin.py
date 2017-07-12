@@ -25,7 +25,12 @@ class Admin():
             if '<@' in ctx.message.content:
                 await self.bot.say("That user doesn't exist but okay.")
                 return
-        if x == None or user == None:
+        if x == None:
+            fakeban = 'Banned {}'.format(ctx.message.mentions[0].name)
+            await self.bot.say(fakeban)
+            await asyncio.sleep(1)
+            return
+        elif user == None:
             await self.bot.say('Please tag a user and give a reason.')
             return
 
@@ -303,7 +308,7 @@ class Admin():
             await self.bot.say(notallowed)
 
 
-    @commands.command(pass_context=True, help=helpText['purge'][1], brief=helpText['purge'][0], aliases=['clear'])
+    @commands.command(pass_context=True, help=helpText['purge'][1], brief=helpText['purge'][0], aliases=['clear', 'rm'])
     async def purge(self, ctx):
         """Purges x messages from the channel."""
         if allowUse(ctx, ['manage_messages']):

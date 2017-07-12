@@ -14,6 +14,8 @@ def normalize(toNormal):
         toNormal = 'ChannelUpdates'
     elif toNormal in ['server', 'serverupdate', 'serverupdates']:
         toNormal = 'ServerUpdates'
+    elif toNormal = ['profane', 'langfilter', 'languagefilter', 'profanity', 'swears']:
+        toNormal = 'Swears'
     else:
         raise IOError(
             "The input from the user was not found in the configuration JSON.")
@@ -68,7 +70,7 @@ class Configuration():
             return
         try:
             toEnable = normalize(ctx)
-            if toEnable in ['ImgurAlbum', 'ChannelUpdates']:
+            if toEnable in ['ImgurAlbum', 'ChannelUpdates', 'Swears']:
                 raise IOError(
                     "The input from the user was not found in the configuration JSON.")
         except IOError as e:
@@ -92,7 +94,7 @@ class Configuration():
             return
         try:
             toEnable = normalize(ctx)
-            if toEnable == ['ImgurAlbum', 'ChannelUpdates', 'ServerUpdates']:
+            if toEnable == ['ImgurAlbum', 'ChannelUpdates', 'ServerUpdates', 'Swears']:
                 raise IOError(
                     "The input from the user was not found in the configuration JSON.")
         except IOError as e:
