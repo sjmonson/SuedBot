@@ -39,7 +39,11 @@ class Admin():
                 await self.bot.send_message(ctx.message.mentions[0], "You have been banned from **{}** for the following :: \n{}".format(ctx.message.server.name, x))
             except:
                 pass
-            await self.bot.ban(user)
+            try:
+                await self.bot.ban(user)
+            except discord.Forbidden:
+                await self.bot.say("I do not have permission to ban!")
+                return
         else:
             await self.bot.say("Privilege level too low.")
             return
@@ -80,7 +84,11 @@ class Admin():
                 await self.bot.send_message(ctx.message.mentions[0], "You have been kicked from **{}** for the following :: \n{}\n\nRejoin when you're ready :: {}".format(ctx.message.server.name, x, inviteLink))
             except:
                 pass
-            await self.bot.kick(user)
+            try:
+                await self.bot.kick(user)
+            except discord.Forbidden:
+                await self.bot.say("I do not have permission to kick!")
+                return
         else:
             await self.bot.say("Privilege level too low.")
             return

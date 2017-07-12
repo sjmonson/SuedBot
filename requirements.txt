@@ -9,7 +9,6 @@ pyowm
 google
 esix
 strawpoll.py
-microsofttranslator
 wikipedia
 humanize
 Pillow

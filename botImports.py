@@ -15,7 +15,6 @@ from steam.api import interface
 import wikipedia
 import steam
 import random
-from microsofttranslator import *
 import re
 import humanize
 from io import StringIO

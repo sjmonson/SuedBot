@@ -362,23 +362,5 @@ class Fun():
         with open("jpegTEMP.jpg", "rb") as a:
             await self.bot.send_file(ctx.message.channel, a)
 
-
-    @commands.command(pass_context=True, description='Gives the lenny face.')
-    async def urban(self, ctx, *, message : str):
-        try:
-            await self.bot.add_reaction(ctx.message, '👀')
-            edit = None
-        except:
-            edit = await self.bot.say(waitmessage)
-
-        try:
-            x = urbandictionary.define(message)[0]
-        except:
-            await self.bot.say("There were no definitions for `{}`.".format(message))
-            return
-        y = "`{}` :: {}".format(x.word, x.definition)
-        await self.bot.say(y) if edit == None else await self.bot.edit_message(edit, y)
-
-
 def setup(bot):
     bot.add_cog(Fun(bot))

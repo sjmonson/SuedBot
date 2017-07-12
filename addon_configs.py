@@ -14,8 +14,6 @@ def normalize(toNormal):
         toNormal = 'ChannelUpdates'
     elif toNormal in ['server', 'serverupdate', 'serverupdates']:
         toNormal = 'ServerUpdates'
-    elif toNormal = ['profane', 'langfilter', 'languagefilter', 'profanity', 'swears']:
-        toNormal = 'Swears'
     else:
         raise IOError(
             "The input from the user was not found in the configuration JSON.")

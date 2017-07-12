@@ -5,7 +5,6 @@ steam.api.key.set(tokens['Steam'])
 wolfClient = wolframalpha.Client(tokens['Wolfram'])
 # r_e = praw.Reddit(user_agent="A post searcher for a Discord user.")
 imgurUsr = ImgurClient(tokens['ImgurClient'], tokens['ImgurSecret'])
-translator = Translator(tokens['MSTransID'], tokens['MSTransSecret'])
 
 
 def getSteamIDFromURL(urlInQuestion):
@@ -59,11 +58,15 @@ class Search():
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(pass_context=True, description='Compares the games that you and any number of given Steam users have.')
-    async def sc(self, ctx):
+    @commands.command(pass_context=True, description='Compares the games that you and any number of given Steam users have.',aliases=['sc'])
+    async def steamcompare(self, ctx):
         edit = await self.bot.say(waitmessage)
         print("Comparing Steam users.")
-        users = ctx.message.content.split(' ', 1)[1].split(" ")
+        try:
+            users = ctx.message.content.split(' ', 1)[1].split(" ")
+        except IndexError:
+            await self.bot.edit_message(edit, "Please enter two or more profile URLs.")
+            return
         users2 = []
         for i in users:
             aye = i.split("/")
@@ -74,8 +77,15 @@ class Search():
             try:
                 int(aye)
             except ValueError:
-                aye = getSteamIDFromURL(i)
+                try:
+                    aye = getSteamIDFromURL(i)
+                except steam.user.VanityError:
+                    await self.bot.edit_message(edit, "User {} does not exist".format(i))
+                    return
             users2.append(aye)
+        if len(users2) <= 1:
+            await self.bot.edit_message(edit, "Please enter two or more profile URLs.")
+            return
         for i in users2:
             print("    ID :: %s" % i)
         x = []
@@ -93,21 +103,14 @@ class Search():
             return
         await self.bot.edit_message(edit, v)
 
-    @commands.command(pass_context=True)
-    async def trans(self, ctx):
-        toChange = ctx.message.content.split(' ', 2)[2]
-        langTo = ctx.message.content.split(' ', 2)[1]
-        if langTo not in translator.get_languages():
-            await self.bot.say("The language provided is not supported.")
-            return
-
-        translatedText = translator.translate(toChange, langTo)
-        await self.bot.say(translatedText)
-
-    @commands.command(pass_context=True, description='Returns the result of a Google search.', enabled=True)
-    async def sg(self, ctx):
+    @commands.command(pass_context=True, description='Returns the result of a Google search.', aliases=['sg'])
+    async def searchgoogle(self, ctx):
         edit = await self.bot.say(waitmessage)
-        query = ctx.message.content.split(' ', 1)[1]
+        try:
+            query = ctx.message.content.split(' ', 1)[1]
+        except IndexError:
+            await self.bot.say("Please enter a search query.")
+            return
         print("Searching Google :: %s" % query)
         for i in search(query):
             await self.bot.edit_message(edit, i)
@@ -123,7 +126,7 @@ class Search():
             return
 
         z = u.avatar_url if u.avatar_url != None else u.default_avatar_url
-        a = discord.Embed(colour=0xDEADBF)
+        a = discord.Embed(color=0xDEADBF)
         a.set_author(name=str(u), icon_url=z)
         s = {
              'Username' : u.name,
@@ -131,8 +134,9 @@ class Search():
              'Display Name' : u.display_name if u.display_name != None else u.name,
              'ID' : u.id,
              'Bot' : u.bot,
-             'Created' : str(u.joined_at)[:-10],
-             'Age' : str(datetime.datetime.now() - u.joined_at).split(",")[0],
+             'Created' : str(u.created_at)[:-10],
+             'Account Age' : str(datetime.datetime.now() - u.created_at).split(",")[0],
+             'Server Age' : str(datetime.datetime.now() - u.joined_at).split(",")[0],
              'Roles' : ', '.join([g.name for g in u.roles][1:])
              }
         for i in s:
@@ -144,8 +148,8 @@ class Search():
         print("Giving info on user :: %s" % mea.content.split(' ', 1)[1])
 
 
-    @commands.command(pass_context=True, description='Searches Wolfram Alpha.')
-    async def w(self, ctx):
+    @commands.command(pass_context=True, description='Searches Wolfram Alpha.', enabled=False, hidden=True)
+    async def wolfram(self, ctx):
         edit = await self.bot.say(waitmessage)
         message = ctx.message
         print("Getting query to Wolfram :: %s" %
@@ -181,8 +185,8 @@ class Search():
         await self.bot.edit_message(edit, z)
         return
 
-    @commands.command(pass_context=True, description='Searches Wikipedia for a given string.')
-    async def wp(self, ctx):
+    @commands.command(pass_context=True, description='Searches Wikipedia for a given string.', aliases=['wp'])
+    async def wiki(self, ctx):
         edit = await self.bot.say(waitmessage)
         searchTerm = ctx.message.content.split(' ', 1)[1]
         try:
@@ -229,8 +233,8 @@ class Search():
             await self.bot.edit_message(edit, "There are no results for this search term.")
         return
 
-    @commands.command(pass_context=True, description='Returns the result of a Imgur search.')
-    async def si(self, ctx):
+    @commands.command(pass_context=True, description='Returns the result of a Imgur search.', aliases=['si'])
+    async def searchimgur(self, ctx):
         edit = await self.bot.say(waitmessage)
         query = ctx.message.content.split(' ', 1)[1]
         if query == '':
@@ -242,6 +246,22 @@ class Search():
             await self.bot.edit_message(edit, '**%s**\n%s' % (i.title, imgurAlbumToItems(i)))
             # await self.bot.edit_message(edit, '**%s**\n%s' % (i.title, i.url))
             return
+
+    @commands.command(pass_context=True, description='Gives the lenny face.')
+    async def urban(self, ctx, *, message : str):
+        try:
+            await self.bot.add_reaction(ctx.message, '👀')
+            edit = None
+        except:
+            edit = await self.bot.say(waitmessage)
+
+        try:
+            x = urbandictionary.define(message)[0]
+        except:
+            await self.bot.say("There were no definitions for `{}`.".format(message))
+            return
+        y = "`{}` :: {}".format(x.word, x.definition)
+        await self.bot.say(y) if edit == None else await self.bot.edit_message(edit, y)
 
 def setup(bot):
     bot.add_cog(Search(bot))
