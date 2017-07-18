@@ -165,8 +165,8 @@ class Admin():
 
         try:
             await self.bot.add_roles(user, rol)
-            await self.bot.say("{} has been given the role `{}`".format(user, givenRole))
-            print("Server {} - {} has been given the role `{}`".format(ctx.message.server.name, user, givenRole))
+            await self.bot.say("{} has been given the role `{}`".format(user.mention, rol.name))
+            print("Server {} - @{} has been given the role `{}`".format(ctx.message.server.name, user, rol.name))
         except discord.Forbidden:
             await self.bot.say("Privilege level too low.")
             return
@@ -202,8 +202,8 @@ class Admin():
 
         try:
             await self.bot.remove_roles(user, rol)
-            await self.bot.say("The `{}` role has been removed from {}".format(givenRole, user))
-            print("Server {} - The `{}` role has been removed from {}".format(ctx.message.server.name, givenRole, user))
+            await self.bot.say("The `{}` role has been removed from {}".format(rol.name, user.mention))
+            print("Server {} - The `{}` role has been removed from @{}".format(ctx.message.server.name, rol.name, user))
         except discord.Forbidden:
             await self.bot.say("Privilege level too low.")
             return
