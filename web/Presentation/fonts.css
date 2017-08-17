@@ -1,0 +1,43 @@
+/* Font Inport for all pages */
+@import url('https://fonts.googleapis.com/css?family=Alike+Angular|Asul|Concert+One|Eczar|Neuton|Space+Mono|Tillana|Work+Sans');
+
+/* Fonts */
+.font_space-mono {
+    font-family: 'Space Mono', monospace;
+}
+
+.font_concert-one {
+    font-family: 'Concert One', cursive;
+}
+
+.font_kavoon {
+    font-family: 'Kavoon', cursive;
+}
+
+.font_fruktur {
+    font-family: 'Fruktur', cursive;
+}
+
+.font_tillana {
+    font-family: 'Tillana', cursive;
+}
+
+.font_asul {
+    font-family: 'Asul', sans-serif;
+}
+
+.font_alike-angular {
+    font-family: 'Alike Angular', serif;
+}
+
+.font_work-sans {
+    font-family: 'Work Sans', sans-serif;
+}
+
+.font_neutron {
+    font-family: 'Neuton', serif;
+}
+
+.font_eczar {
+    font-family: 'Eczar', serif;
+}

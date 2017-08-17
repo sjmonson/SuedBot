@@ -1,0 +1,139 @@
+body {
+    overflow-x: hidden;
+    background-color: #ece2c6;
+ }
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #cd4e24;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: relative;
+    padding: 20px;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+        width: 250px;
+    }
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+}
+.sidebar-nav .dropdown-menu {
+    background: #6c9ebb;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: auto;
+    width: 100%;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #fff;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    background: none;
+}
+
+li.current-page a {
+    display: block;
+    text-decoration: none;
+    color: rgba(255,255,255,1.0);
+}
+
+.site-logo {
+    width: 75%;
+    height: auto;
+    margin: 3.75%;
+}
+
+/* forums Menu Style */
+
+#forums-menu {
+    color: #fff;
+    background: #6c9ebb;
+}
+
+#forums-menu a {
+    color: #fff;
+}
+
+#forums-menu a:hover {
+    background: #6c9ebb;
+    color: #ece2c6;
+}
+
+#forums-menu .forums-current a {
+    color: #ece2c6;
+}
+
+#forums-menu a:active,
+#forums-menu a:focus {
+    background: #6c9ebb;
+}
+
+#forums-menu .dropdown-toggle:active,
+#forums-menu .dropdown-toggle:focus {
+    background: #016c9ebb;
+    color: #ece2c6;
+}
+
+#forums-menu .dropdown-menu {
+    background: #016c9ebb;
+}

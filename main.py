@@ -12,8 +12,8 @@ logger.addHandler(handler)
 
 
 # Create the bot
-description = '''This is my bot I like to make it do things.'''
-bot = commands.Bot(command_prefix=['.','<@199136310416375808> '], description=description, pm_help=True)
+description = '''SuedBot:\nThe ultimate evolution in bot technology'''
+bot = commands.Bot(command_prefix=['.', "<@{}>".format(tokens['discordID'])], description=description, pm_help=True)
 
 
 # Create all of the tokens and keys
@@ -21,7 +21,6 @@ discordToken = tokens['discord']
 mashapeKey = {"X-Mashape-Key":
               tokens['Mashape']}
 htmlHead = {'Accept-Endoding': 'identity'}
-imgurUsr = ImgurClient(tokens['ImgurClient'], tokens['ImgurSecret'])
 youtubeData = yapi.YoutubeAPI(tokens['YoutubeData'])
 
 # Set the paths

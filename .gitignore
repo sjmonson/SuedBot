@@ -5,6 +5,7 @@ botTxtFiles/bot.log
 botTxtFiles/discordTokens.json
 botTxtFiles/game.txt
 botTxtFiles/blacklist.txt
+web/SuedBot.weproj
 addon_debug.py
 .google-cookie
 *.jpg

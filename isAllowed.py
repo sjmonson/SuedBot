@@ -68,6 +68,13 @@ defSerCon = \
             
         }
     }
+    
+serverAllowances = \
+    {
+        "Mods":{}
+        "Admins":{}
+        "Owners"{}
+    }
 
 
 def giveAllowances(ctx):
