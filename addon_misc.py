@@ -28,7 +28,7 @@ class Misc:
     @commands.command(pass_context=True, help=helpText['echo'][1], brief=helpText['echo'][0])
     async def echo(self, ctx):
         """Simply says back what the person says."""
-        banned_items = ["@everyone", "@here", "<@!", "<@&"]
+        banned_items = ["@everyone", "@here", "<@"]
         for ban in banned_items:
             if ban in ctx.message.content:
                 await self.bot.say("`Mentioning is not allowed.`")
